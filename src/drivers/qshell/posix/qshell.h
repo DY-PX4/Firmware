@@ -40,7 +40,7 @@
 
 #pragma once
 
-#include <px4_app.h>
+#include <px4_platform_common/app.h>
 #include "uORB/topics/qshell_req.h"
 #include <vector>
 #include <string>
@@ -56,7 +56,10 @@ public:
 	static px4::AppState appState; /* track requests to terminate app */
 
 private:
+	int _send_cmd(std::vector<std::string> &argList);
+	int _wait_for_retval();
 
-	struct qshell_req_s m_qshell_req;
-
+	static orb_advert_t _pub_qshell_req;
+	static int _sub_qshell_retval;
+	static uint32_t _current_sequence;
 };
